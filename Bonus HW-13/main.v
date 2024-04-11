@@ -96,6 +96,15 @@ Proof.
     assumption.
 Qed.
 
+Theorem j (A : Prop) : ~~A -> A.
+Proof.
+    intros.
+    unfold not in H.
+    destruct H.
+    intros.
+    assumption.
+Qed.    
+
 (*Task 3*)
 Fixpoint add (n m : nat) :  nat :=
     match n with
@@ -199,3 +208,101 @@ Proof.
     destruct H0.
     assumption.
 Qed.
+
+Theorem first (A B: Prop) : (A -> A -> B) -> (A -> B).
+Proof.
+    intros.
+    apply H.
+    assumption.
+    assumption.
+Qed.
+
+Theorem second (A: Prop) : ~(A /\ ~A).
+Proof.
+    intros.
+    unfold not.
+    intros.
+    destruct H.
+    destruct H0.
+    assumption.
+Qed.
+
+Theorem third (A B: Prop) : (A /\ B) -> (B /\ A).
+Proof.
+    intros.
+    split.
+    destruct H.
+    assumption.
+    destruct H.
+    assumption.
+Qed.
+
+Theorem fourth (A B: Prop) : (A \/ B) -> (B \/ A).
+Proof.
+    intros.
+    destruct H.
+    right.
+    assumption.
+    left.
+    assumption.
+Qed.
+
+Theorem fifth (A B: Prop) : (A /\ ~A) -> B.
+Proof.
+    intros.
+    destruct H.
+    unfold not in H0.
+    destruct H0.
+    assumption.
+Qed.    
+
+Theorem sixth (A B: Prop) : A -> ~~A.
+Proof.
+    intros.
+    unfold not.
+    intros.
+    destruct H0.
+    assumption.
+Qed.
+
+(* Theorem seventh (A B: Prop) : ~A -> B -> ~(A /\ B).
+Proof.
+    intros.
+    unfold not.
+    unfold not in H.
+Qed. *)
+
+Theorem thirdA (A B C: Prop) : (A -> B) -> (B -> C) -> (A -> C).
+Proof.
+    intros.
+    apply H0.
+    apply H.
+    assumption.
+Qed.
+
+Theorem thirdB (A B: Prop) : (A -> B) -> (~B -> ~A).
+Proof.
+    intros.
+    unfold not.
+    unfold not in H0.
+    intros.
+    destruct H0.
+    apply H.
+    assumption.
+Qed.    
+
+Theorem thirdC (A B: Prop) : ~(~A /\ ~B) -> (A \/ B).
+Proof.
+    intros.
+    unfold not in H.
+    destruct H.
+    split.
+    intros.
+Qed.
+
+From Coq Require Import Unicode.Utf8
+
+Class poset (A : Type) := {
+    le : A -> A -> Prop;
+    
+}.
